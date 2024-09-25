@@ -30,12 +30,12 @@ class _OtpVerifactionsState extends State<OtpVerifactions> {
 
           children: [
             SvgPicture.asset(AssetsPath.splashAppSvg,width: 120,),
-            SizedBox(height: 10,),
+            SizedBox(height: 8,),
             Text("Enter Otp Code ",style:title.titleLarge,),
             Text("A 4 digits otp Code ",style: title.bodySmall,),
-           // SizedBox(height: 20,),
+            SizedBox(height: 16,),
             buildPinCodeTextField(context),
-            SizedBox(height: 25,),
+            SizedBox(height: 24,),
             SizedBox(
               width: double.maxFinite,
               child: ElevatedButton(

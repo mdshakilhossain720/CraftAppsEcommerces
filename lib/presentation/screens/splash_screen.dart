@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> moveToNext() async {
     await Future.delayed(Duration(seconds: 3));
-   Get.to(EmailVerifaction());
+   Get.to(HomeScreen());
   }
 
   @override

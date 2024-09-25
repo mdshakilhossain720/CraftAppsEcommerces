@@ -26,17 +26,17 @@ class _EmailVerifactionState extends State<EmailVerifaction> {
 
           children: [
            SvgPicture.asset(AssetsPath.splashAppSvg,width: 120,),
-            SizedBox(height: 30,),
+            SizedBox(height:8,),
             Text("wellcome Back",style:title.titleLarge,),
             Text("Enter your email",style: title.bodySmall,),
-            SizedBox(height: 20,),
+            SizedBox(height:16,),
             TextFormField(
               controller: emailTextEditingController,
               decoration: InputDecoration(
                 hintText: 'Email',
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(height:24,),
             SizedBox(
               width: double.maxFinite,
               child: ElevatedButton(
