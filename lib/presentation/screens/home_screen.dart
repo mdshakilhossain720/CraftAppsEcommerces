@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:craftproject/presentation/screens/email_verifaction.dart';
 import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:craftproject/presentation/utility/asset_path.dart';
+import 'package:craftproject/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -54,79 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 8,
               ),
-              Card(
-                color: Colors.white,
-                child: SizedBox(
-                  width: 130,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 130,
+              buildProductListView(),
+              SizedBox(height: 16,),
+              SectionHearder(
+                title: 'New Product',
+                ontab: () {},
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              buildProductListView(),
 
-                        color: AppColor.primaryColor.withOpacity(0.1),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(AssetsPath.shoes),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                         // mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Nike Sport Shoe Special 3001 Edition",
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-
-                            Wrap(
-                              spacing: 10,
-                              alignment:WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-
-                              children: [
-                                Text("\$34",style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.primaryColor,
-                                ),),
-                                //Spacer(),
-                                Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Icon(Icons.star,color: Colors.amber,size: 20,),
-                                    Text("3.4"),
-                                    Card(
-                                      color: AppColor.primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(2),
-
-                                      ),
-                                      child: Icon(Icons.favorite_border),
-                                    ),
-                                  ],
-                                ),
-
-                              ],
-                            ),
-
-
-
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),
@@ -153,6 +92,30 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
+  Widget buildProductListView() {
+    return SizedBox(
+      height: 220,
+      child: ListView.separated(
+        itemCount: 10,
+        shrinkWrap: true,
+        primary: false,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return ProductCard();
+        },
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            width:8,
+          );
+        },
+      ),
+    );
+  }
+
+
+
 
   Widget _buildSearchTextField() {
     return TextFormField(
@@ -197,3 +160,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+

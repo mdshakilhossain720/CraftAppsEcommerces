@@ -4,6 +4,8 @@ import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'bindings.dart';
+
 class CraftBy extends StatefulWidget {
   const CraftBy({super.key});
 
@@ -16,6 +18,7 @@ class _CraftByState extends State<CraftBy> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: ControllerBinding(),
 
       theme: ThemeData(
         colorSchemeSeed: AppColor.primaryColor,
