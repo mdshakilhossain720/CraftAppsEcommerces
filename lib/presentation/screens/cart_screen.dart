@@ -19,11 +19,13 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
+
       canPop:false,
       onPopInvoked: (_) async {
         Get.find<BottomNavBarController>().backToHome();
       },
       child: Scaffold(
+      //  bottomNavigationBar: _buildCheeckOut(),
           appBar: AppBar(
             title: Text('Cart'),
             leading: IconButton(
@@ -32,6 +34,22 @@ class _CartScreenState extends State<CartScreen> {
                 },
                 icon: Icon(Icons.arrow_back_ios)),
           ),
+
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: 5,
+                  shrinkWrap: true,
+                  primary: false,
+                  itemBuilder: (context,index){
+                return Cartdetail();
+              }),
+            ),
+
+            _buildCheeckOut(),
+          ],
+        ),
 
 
     ));

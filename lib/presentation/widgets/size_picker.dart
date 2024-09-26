@@ -3,8 +3,8 @@ import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:flutter/material.dart';
 class SizePicker extends StatefulWidget {
   const SizePicker({super.key, required this.size, required this.onchange});
-  final List<Color> size;
-  final Function (Color) onchange;
+  final List<String> size;
+  final Function (String) onchange;
 
   @override
   State<SizePicker> createState() => _SizePickerState();
@@ -17,7 +17,7 @@ class _SizePickerState extends State<SizePicker> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 20,
+      height: 40,
       child: ListView.builder(
           shrinkWrap:true,
           scrollDirection: Axis.horizontal,
@@ -32,20 +32,26 @@ class _SizePickerState extends State<SizePicker> {
 
                 });
               },
-              // child: Container(
-              //   decoration: BoxDecoration(
-              //     color: getselectcolorbackground(index == selectindex),
-              //     borderRadius: BorderRadius.circular(100),
-              //     border: Border.all(color:getselectcolor(index == selectindex) ),
-              //
-              //   ),
-              //
-              //   child:Text(widget.size[index],style:TextStyle(
-              //     color: getselectcolor(index==selectindex)
-              //
-              //   ),)
-              //
-              // ),
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 6),
+
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: getselectcolorbackground(index == selectindex),
+                  borderRadius: BorderRadius.circular(100),
+                  //shape: BoxShape.circle,
+                  border: Border.all(color:getselectcolor(index == selectindex) ),
+
+                ),
+
+                child:Text(widget.size[index],style:TextStyle(
+                  color: getselectcolor(index==selectindex)
+
+                ),)
+
+              ),
             );
 
           }),
