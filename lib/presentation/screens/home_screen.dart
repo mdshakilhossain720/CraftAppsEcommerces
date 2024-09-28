@@ -1,6 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
+
+import 'package:craftproject/data/model/categorityData.dart';
 import 'package:craftproject/presentation/screens/email_verifaction.dart';
-import 'package:craftproject/presentation/utility/app_color.dart';
+import 'package:craftproject/presentation/state_holder/bottom_nav_bar.dart';
+import 'package:craftproject/presentation/state_holder/category_list_controller.dart';
+import 'package:craftproject/presentation/state_holder/home_slider_controller.dart';
+
 import 'package:craftproject/presentation/utility/asset_path.dart';
 import 'package:craftproject/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +13,7 @@ import 'package:get/get.dart';
 
 import '../widgets/appbarREsuable.dart';
 import '../widgets/category_item.dart';
+import '../widgets/centerd_circular_progress.dart';
 import '../widgets/home_carusel_slider.dart';
 import '../widgets/section_hearder.dart';
 
@@ -21,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchTextController = TextEditingController();
+  //final HomeSliderController homeSliderController=Get.find<HomeSliderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +41,33 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 16,
               ),
-              HomeCaruselSlider(),
+              GetBuilder<HomeSliderController>(
+                builder: (sliderController) {
+                  if(sliderController.inprogress){
+                    return CircularProgressIndactor();
+                  }
+                  return HomeCaruselSlider(sliderList:
+                    sliderController.SliderList);
+                }
+              ),
               SizedBox(height: 16),
               SectionHearder(
                 title: 'All Categories',
-                ontab: () {},
+                ontab: () {
+                  Get.find<BottomNavBarController>().selectCategroy();
+                },
               ),
               SizedBox(
                 height: 8,
               ),
-              buildCategroyListView(),
+              GetBuilder<CategoryListController>(
+                builder: (categoryListController) {
+                  if (categoryListController.inprogress){
+                    return CircularProgressIndactor();
+                  }
+                  return buildCategroyListView(categoryListController.categoryList);
+                }
+              ),
               SizedBox(
                 height: 8,
               ),
@@ -73,16 +96,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildCategroyListView() {
+  Widget buildCategroyListView(List<Category> categoryList) {
     return SizedBox(
       height: 120,
       child: ListView.separated(
-        itemCount: 10,
+        itemCount: categoryList.length,
         shrinkWrap: true,
         primary: false,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return CategroyItems();
+          return CategroyItems(category:categoryList[index],);
         },
         separatorBuilder: (context, index) {
           return SizedBox(
@@ -160,5 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
 
 

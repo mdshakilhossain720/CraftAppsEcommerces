@@ -1,11 +1,13 @@
 
 import 'package:craftproject/presentation/screens/home_screen.dart';
 import 'package:craftproject/presentation/screens/wish_list.dart';
+import 'package:craftproject/presentation/state_holder/category_list_controller.dart';
 import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../state_holder/bottom_nav_bar.dart';
+import '../state_holder/home_slider_controller.dart';
 import '../widgets/cart_product.dart';
 import 'cart_screen.dart';
 import 'categority_list.dart';
@@ -30,6 +32,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
 
   ];
+
+  final HomeSliderController homeSliderController=Get.find<HomeSliderController>();
+  final CategoryListController categoryListController=Get.find<CategoryListController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    homeSliderController.getSliders();
+    categoryListController.getCategory();
+  }
 
   @override
   Widget build(BuildContext context) {

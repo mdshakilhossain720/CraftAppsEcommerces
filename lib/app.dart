@@ -8,6 +8,8 @@ import 'bindings.dart';
 
 class CraftBy extends StatefulWidget {
   const CraftBy({super.key});
+  static GlobalKey<NavigatorState> navigationkey=GlobalKey<NavigatorState>();
+
 
   @override
   State<CraftBy> createState() => _CraftByState();
@@ -17,6 +19,7 @@ class _CraftByState extends State<CraftBy> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: CraftBy.navigationkey,
       debugShowCheckedModeBanner: false,
       initialBinding: ControllerBinding(),
 

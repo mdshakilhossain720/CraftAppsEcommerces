@@ -1,12 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/model/slider_data.dart';
 import '../utility/app_color.dart';
+import 'cach_network_image.dart';
 
 class HomeCaruselSlider extends StatefulWidget {
   const HomeCaruselSlider({
-    super.key,
+    super.key, required this.sliderList,
   });
+
+  final List<SliderData> sliderList;
 
   @override
   State<HomeCaruselSlider> createState() => _HomeCaruselSliderState();
@@ -25,7 +29,7 @@ class _HomeCaruselSliderState extends State<HomeCaruselSlider> {
                 selectIndex.value=index;
 
           }),
-          items: [1, 2, 3, 4, 5].map((i) {
+          items: widget.sliderList.map((slider) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -35,11 +39,23 @@ class _HomeCaruselSliderState extends State<HomeCaruselSlider> {
                       color: AppColor.primaryColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Center(
-                        child: Text(
-                      'text $i',
-                      style: TextStyle(fontSize: 16.0),
-                    )));
+                    child: Row(
+                      children: [
+                        CachNetworkImage(url:slider.image ?? '',),
+                        Expanded(
+
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(slider.title ?? ''),
+                              Text(slider.shortDes ?? ''),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+
+                );
               },
             );
           }).toList(),
@@ -51,7 +67,7 @@ class _HomeCaruselSliderState extends State<HomeCaruselSlider> {
             return  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < widget.sliderList.length; i++)
                   Container(
                     height: 16,
                     width: 16,

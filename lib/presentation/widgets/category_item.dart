@@ -1,19 +1,22 @@
+import 'package:craftproject/data/model/categorityData.dart';
 import 'package:craftproject/presentation/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../utility/app_color.dart';
+import 'cach_network_image.dart';
 
 class CategroyItems extends StatelessWidget {
   const CategroyItems({
-    super.key,
+    super.key, required this.category,
   });
+  final Category category;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>ProductListScreen(cateGorityName: 'Electronics'));
+        Get.to(()=>ProductListScreen(cateGorityName: category.categoryName ?? ''));
       },
       child: Column(
         children: [
@@ -25,16 +28,17 @@ class CategroyItems extends StatelessWidget {
 
 
             ),
-            child: Icon(Icons.desktop_windows,size: 48,color: AppColor.primaryColor,),
+            child: CachNetworkImage(url: category.categoryImg ?? '',height: 30,width: 30,)
 
 
 
           ),
-          Text("Electronics",style: TextStyle(
+          Text(category.categoryName.toString(),maxLines:1,style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
             color: AppColor.primaryColor,
             letterSpacing: 0.4,
+            overflow: TextOverflow.ellipsis,
           ),),
 
         ],
