@@ -22,7 +22,7 @@ class ProductByCategoryListController extends GetxController {
 
   String get errorMessage => _errorMessage;
 
-  Future<bool> getProductList() async {
+  Future<bool> getProductList(int ) async {
     bool isSuccess = false;
     _inprogress=true;
     update();

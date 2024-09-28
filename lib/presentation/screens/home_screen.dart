@@ -1,5 +1,6 @@
 
 import 'package:craftproject/data/model/categorityData.dart';
+import 'package:craftproject/data/model/product.dart';
 import 'package:craftproject/presentation/screens/email_verifaction.dart';
 import 'package:craftproject/presentation/state_holder/bottom_nav_bar.dart';
 import 'package:craftproject/presentation/state_holder/category_list_controller.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../state_holder/product_listbye_remark_controller.dart';
 import '../widgets/appbarREsuable.dart';
 import '../widgets/category_item.dart';
 import '../widgets/centerd_circular_progress.dart';
@@ -78,7 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 8,
               ),
-              buildProductListView(),
+              GetBuilder<PopularProductController>(
+                builder: (popularProductController) {
+                  if(popularProductController.popularProductInprogrss){
+                    return CircularProgressIndactor();
+                  }
+                  return buildProductListView(popularProductController.popularProductList);
+                }
+              ),
               SizedBox(height: 16,),
               SectionHearder(
                 title: 'New Product',
@@ -87,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 8,
               ),
-              buildProductListView(),
+             // buildProductListView(),
 
             ],
           ),
@@ -117,16 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  Widget buildProductListView() {
+  Widget buildProductListView(List<Product> productList) {
     return SizedBox(
       height: 220,
       child: ListView.separated(
-        itemCount: 10,
+        itemCount: productList.length,
         shrinkWrap: true,
         primary: false,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return ProductCard();
+          return ProductCard(product: productList[index],);
         },
         separatorBuilder: (context, index) {
           return SizedBox(

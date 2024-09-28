@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../state_holder/bottom_nav_bar.dart';
 import '../state_holder/home_slider_controller.dart';
+import '../state_holder/product_listbye_remark_controller.dart';
 import '../widgets/cart_product.dart';
 import 'cart_screen.dart';
 import 'categority_list.dart';
@@ -35,6 +36,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final HomeSliderController homeSliderController=Get.find<HomeSliderController>();
   final CategoryListController categoryListController=Get.find<CategoryListController>();
+  final  PopularProductController popularProductController=Get.find< PopularProductController>();
 
   @override
   void initState() {
@@ -42,6 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     super.initState();
     homeSliderController.getSliders();
     categoryListController.getCategory();
+    popularProductController.getPopularProduct();
   }
 
   @override

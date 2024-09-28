@@ -1,3 +1,4 @@
+import 'package:craftproject/data/model/product.dart';
 import 'package:craftproject/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,9 +7,10 @@ import '../utility/app_color.dart';
 import '../utility/asset_path.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({this.showAddTocard = true, super.key});
+  const ProductCard({this.showAddTocard = true, super.key, required this.product});
 
   final bool showAddTocard;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class ProductCard extends StatelessWidget {
                   // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Nike Sport Shoe Special 3001 Edition",
+                      product.title ?? " ",
                       // textAlign: TextAlign.center,
                       maxLines: 2,
                       style: TextStyle(
@@ -56,7 +58,7 @@ class ProductCard extends StatelessWidget {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
-                          "\$34",
+                          "\$${product.price}",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -72,7 +74,7 @@ class ProductCard extends StatelessWidget {
                               color: Colors.amber,
                               size: 20,
                             ),
-                            Text("3.4"),
+                            Text('${product.star}'),
                             _buildAddToShowButton(),
                           ],
                         ),

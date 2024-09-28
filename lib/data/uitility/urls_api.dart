@@ -4,7 +4,9 @@ class Urls{
 
   final String homeSlider="$_baseurl/ListProductSlider";
   final String categoryList="$_baseurl/CategoryList";
-   String listProductByCategory(int categoryId)=>"$_baseurl/ListProductByCategory/$categoryId";
+  static String listProductByCategory(int categoryId)=>"$_baseurl/ListProductByCategory/$categoryId";
+
+  static String productListByRemark(String remark)=>"$_baseurl/ListProductByRemark/${remark}";
 
 
 }
