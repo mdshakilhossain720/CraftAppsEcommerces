@@ -1,7 +1,9 @@
 
+import 'package:craftproject/data/model/product_details_model.dart';
 import 'package:craftproject/presentation/screens/home_screen.dart';
 import 'package:craftproject/presentation/screens/wish_list.dart';
 import 'package:craftproject/presentation/state_holder/category_list_controller.dart';
+import 'package:craftproject/presentation/state_holder/new_product_controller.dart';
 import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +30,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget>screen=[
     HomeScreen(),
     CategorityList(),
-    CartScreen(),
+    CartScreen(productId:ProductDetailsModel().id ?? 0,),
     WishList(),
 
 
@@ -37,6 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final HomeSliderController homeSliderController=Get.find<HomeSliderController>();
   final CategoryListController categoryListController=Get.find<CategoryListController>();
   final  PopularProductController popularProductController=Get.find< PopularProductController>();
+  final  NewProductController newProductController=Get.find<NewProductController>();
 
   @override
   void initState() {
@@ -45,6 +48,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     homeSliderController.getSliders();
     categoryListController.getCategory();
     popularProductController.getPopularProduct();
+    newProductController.getNewProduct();
   }
 
   @override

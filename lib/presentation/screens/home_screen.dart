@@ -5,6 +5,7 @@ import 'package:craftproject/presentation/screens/email_verifaction.dart';
 import 'package:craftproject/presentation/state_holder/bottom_nav_bar.dart';
 import 'package:craftproject/presentation/state_holder/category_list_controller.dart';
 import 'package:craftproject/presentation/state_holder/home_slider_controller.dart';
+import 'package:craftproject/presentation/state_holder/new_product_controller.dart';
 
 import 'package:craftproject/presentation/utility/asset_path.dart';
 import 'package:craftproject/presentation/widgets/product_card.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../state_holder/product_listbye_remark_controller.dart';
+import '../state_holder/special_product_controller.dart';
 import '../widgets/appbarREsuable.dart';
 import '../widgets/category_item.dart';
 import '../widgets/centerd_circular_progress.dart';
@@ -97,6 +99,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 8,
               ),
              // buildProductListView(),
+              GetBuilder<NewProductController>(
+                  builder: (newProductController) {
+                    if(newProductController.Inprogrss){
+                      return CircularProgressIndactor();
+                    }
+                    return buildProductListView(newProductController.newProductList);
+                  }
+              ),
+              SizedBox(height: 16,),
+              SectionHearder(
+                title: 'Special Product',
+                ontab: () {},
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              // buildProductListView(),
+              GetBuilder<SpecialProductController>(
+                  builder: (specialProductController) {
+                    if(specialProductController.Inprogrss){
+                      return CircularProgressIndactor();
+                    }
+                    return buildProductListView(specialProductController.newProductList);
+                  }
+              ),
 
             ],
           ),

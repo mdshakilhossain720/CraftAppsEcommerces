@@ -1,3 +1,5 @@
+import 'package:craftproject/data/model/cart_model.dart';
+import 'package:craftproject/presentation/state_holder/add_to_cart_controller.dart';
 import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,26 +8,34 @@ import 'package:get/get.dart';
 
 import '../state_holder/bottom_nav_bar.dart';
 import '../widgets/cart_page.dart';
-import '../widgets/cart_product.dart';
+
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  CartScreen({ required this.productId, super.key});
+
+  final int productId;
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
+
+
+  String? selececolor;
+  String? selectSize;
+  int ? countvalue;
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
 
-      canPop:false,
-      onPopInvoked: (_) async {
-        Get.find<BottomNavBarController>().backToHome();
-      },
-      child: Scaffold(
-      //  bottomNavigationBar: _buildCheeckOut(),
+        canPop: false,
+        onPopInvoked: (_) async {
+          Get.find<BottomNavBarController>().backToHome();
+        },
+        child: Scaffold(
+          //  bottomNavigationBar: _buildCheeckOut(),
           appBar: AppBar(
             title: Text('Cart'),
             leading: IconButton(
@@ -35,24 +45,24 @@ class _CartScreenState extends State<CartScreen> {
                 icon: Icon(Icons.arrow_back_ios)),
           ),
 
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                  shrinkWrap: true,
-                  primary: false,
-                  itemBuilder: (context,index){
-                return Cartdetail();
-              }),
-            ),
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    primary: false,
+                    itemBuilder: (context, index) {
+                      return Cartdetail();
+                    }),
+              ),
 
-            _buildCheeckOut(),
-          ],
-        ),
+              _buildCheeckOut(),
+            ],
+          ),
 
 
-    ));
+        ));
   }
 
   Widget _buildCheeckOut() {
@@ -87,7 +97,16 @@ class _CartScreenState extends State<CartScreen> {
           ),
           SizedBox(
               width: 100,
-              child: ElevatedButton(onPressed: () {}, child: Text('CheeckOut')))
+              child: GetBuilder<AddToCartController>(
+                  builder: (addToCartController) {
+                    CartModel cartModel = CartModel(productId: widget.productId,
+                        color: selececolor ??'',
+                        size: selectSize ?? '',
+                        qty:countvalue);
+                    return ElevatedButton(
+                        onPressed: () {}, child: Text('CheeckOut'));
+                  }
+              ))
         ],
       ),
     );

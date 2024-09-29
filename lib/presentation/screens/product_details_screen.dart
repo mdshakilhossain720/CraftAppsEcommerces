@@ -1,4 +1,6 @@
 
+import 'package:craftproject/data/model/product_details_model.dart';
+import 'package:craftproject/presentation/state_holder/product_details_controller.dart';
 import 'package:craftproject/presentation/utility/app_color.dart';
 import 'package:craftproject/presentation/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,9 @@ import 'review_screen.dart';
 
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({super.key});
+  const ProductDetails({super.key, required this.productId});
+
+  final int productId;
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -22,87 +26,105 @@ class _ProductDetailsState extends State<ProductDetails> {
   int _counterValue = 0;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Product details'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ProductImageSlider(),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: GetBuilder<ProductDetailsController>(
+        builder: (productDetailsController) {
+          if(productDetailsController.ProductDetailsInprogrss){
+            return Center(child: CircularProgressIndicator());
+          }
+          if(productDetailsController.errorMessage.isNotEmpty){
+            return Center(
+              child: Text(productDetailsController.errorMessage),
+            );
+          }
+          ProductDetailsModel productDetailsModel=ProductDetailsController().productDetailModel;
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ProductImageSlider(images: [
+                        productDetailsModel.img1 ?? '',
+                        productDetailsModel.img2 ?? '',
+                        productDetailsModel.img3 ?? '',
+                        productDetailsModel.img4 ?? '',
+                      ],),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  productDetailsModel.product!.title ?? '',
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black45,
+                                  ),
+                                ),
+                                buildItemCount(),
+                              ],
+                            ),
+                            //_buildwrapreview(),
+                            Text("Color",style: TextStyle(fontSize: 20,),),
+                            SizedBox(height: 5,),
+                            ColorPicker(
+                              colors: [
+                                Colors.black,
+                                Colors.green,
+                                Colors.blue,
+                                Colors.red,
+                                Colors.yellow,
+                              ],
+                              onchange: (Color) {},
+                            ),
+                            SizedBox(height: 12,),
+                            Text("Size"),
+                            SizedBox(height: 12,),
+                            SizePicker(size: productDetailsModel.size!.split(',')??[], onchange: (String s){}),
+                            SizedBox(height: 12,),
                             Text(
-                              "Nike shoes is 2024 Editons",
-                              maxLines: 2,
+                              "Descriptions",
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black45,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
                               ),
                             ),
-                            buildItemCount(),
+                            SizedBox(height: 5,),
+                            Text(productDetailsModel.product!.shortDes ?? ''),
+                            SizedBox(height: 5,),
+                            Text(productDetailsModel.des ?? ''),
+
+
+
                           ],
                         ),
-                        _buildwrapreview(),
-                        Text("Color",style: TextStyle(fontSize: 20,),),
-                        SizedBox(height: 5,),
-                        ColorPicker(
-                          colors: [
-                            Colors.black,
-                            Colors.green,
-                            Colors.blue,
-                            Colors.red,
-                            Colors.yellow,
-                          ],
-                          onchange: (Color) {},
-                        ),
-                        SizedBox(height: 12,),
-                        Text("Size"),
-                        SizedBox(height: 12,),
-                        SizePicker(size:[
-                          'M',
-                          'L',
-                          'Xl',
-                          'ML',
-                        ], onchange: (String s){}),
-                        SizedBox(height: 12,),
-                        Text(
-                          "Descriptions",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 5,),
-                        Text(
-                            '''simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-                        
-                        '''),
-                        SizedBox(height: 5,),
-
-
-
-                      ],
-                    ),
-                  )
-                ],
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          _buildCheeckOut(),
-        ],
+              _buildCheeckOut(),
+            ],
+          );
+        }
       ),
     );
   }
@@ -144,14 +166,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Widget _buildwrapreview() {
+  Widget _buildwrapreview(ProductDetailsModel produtcdetails) {
     return Wrap(
       spacing: 10,
       alignment: WrapAlignment.start,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          "\$30",
+          "\$${produtcdetails.product!.price ?? 0}",
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 16,

@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 
 class ProductImageSlider extends StatefulWidget {
   const ProductImageSlider({
-    super.key,
+    super.key, required this.images,
   });
+
+  final List<String> images;
 
   @override
   State<ProductImageSlider> createState() => _ProductImageSliderState();
@@ -25,7 +27,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
             selectindex.value=index;
 
           }),
-          items: [1,2,3,4,5].map((i) {
+          items: widget.images.map((image) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -37,7 +39,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                       color: Colors.grey.shade300,
                     ),
 
-                    child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                    child: Image.network(image),
                 );
               },
             );
@@ -50,7 +52,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for(var i=0; i<5;i++)
+                for(var i=0; i<widget.images.length;i++)
                   Container(
                     height: 15,
                     width: 15,

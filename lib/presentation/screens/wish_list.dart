@@ -22,9 +22,9 @@ class _WishListState extends State<WishList> {
         itemBuilder: (context,index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 4),
-            child: FittedBox(child: ProductCard(
-              showAddTocard: false,
-            )),
+            // child: FittedBox(child: ProductCard(
+            //   showAddTocard: false,
+            // )),
           );
         },
       ),
